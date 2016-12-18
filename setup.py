@@ -31,9 +31,9 @@ setuptools.setup(
         .match(open('nacha/__init__.py').read())
         .group(1)
     ),
-    url='https://github.com/balanced/nacha',
-    author='Balanced',
-    author_email='dev+nacha@balancedpayments.com',
+    url='https://github.com/soggysec/nacha',
+    author='soggysec',
+    author_email='',
     description='NACHA',
     long_description='',
     platforms='any',

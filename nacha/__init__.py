@@ -1,5 +1,5 @@
 """
-`NACHA <http://www.regaltek.com/docs/NACHA Format.pdf>`_ is a fixed sized
+`NACHA <http://www.regaltek.com/docs/NACHA%20Format.pdf>`_ is a fixed sized
 record format used to represent financial transactions composed like this:
 
 .. code::
@@ -160,6 +160,7 @@ StandardEntryClasses = Enum(
     TEL='TEL',  # Telephone-Initiated Entry
     WEB='WEB',  # Internet-Initiated Entry
     CBR='CBR',  # Corporate Cross-Border Payment
+    IAT='IAT',  # International ACH Transaction
     CCD='CCD',  # Cash Concentration or Disbursement
     CTX='CTX',  # Corporate Trade Exchange
     ACK='ACK',  # Acknowledgment Entries
@@ -223,7 +224,16 @@ TransactionCodes = Enum(
     # debit savings
     SAVINGS_RETURNED_DEBIT=36,
     SAVINGS_DEBIT=37,
-    SAVINGS_PRE_NOTE_DEBIT=38
+    SAVINGS_PRE_NOTE_DEBIT=38,
+
+    GL_DEPOSIT_CREDIT=42,
+    PN_GL_DEPOSIT_CREDIT=43,
+    GL_WITHDRAWAL_DEBIT=47,
+    PN_GL_WITHDRAWAL_CREDIT=48,
+    LOAN_DEPOSIT_CREDIT=52,
+    PN_LOAN_DEPOSIT_CREDIT=53,
+    LOAN_REVERSAL_DEBIT=55,
+
 )
 
 
@@ -318,9 +328,12 @@ class EntryDetailAddendum(Record):
 
     record_type = Record.record_type.constant('7')
 
-    addenda_type = Numeric(2).constant(5)
+    #addenda_type = Numeric(2).constant(5)
+    addenda_type = Numeric(2)
 
-    payment_related_information = Alphanumeric(80)
+    ach_code = Alphanumeric(3)
+
+    payment_related_information = Alphanumeric(77)
 
     addenda_sequence_number = Numeric(4)
 
